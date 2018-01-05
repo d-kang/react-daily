@@ -9,19 +9,18 @@ const seed = [
 ]
 
 class ProductItem extends Component {
-  handleUpvote = () => {
-    this.props.upvote(this.props.id);
+  handleUpvote = (e) => {
+    const type = e.target.innerText // is upvote or downvote
+    const { upvote, id } = this.props;
+    upvote(id, type);
   }
   render() {
     const { id, value } = this.props;
     return (
       <div>
-        {id}{'   :   '}
-        <span
-          onClick={this.handleUpvote}
-        >
-          {value}
-        </span>
+        {id}{'   :   '}{value}
+        {' | '}<span onClick={this.handleUpvote}>upvote</span>
+        {' | '}<span onClick={this.handleUpvote}>downvote</span>
       </div>
     )
   }
@@ -51,15 +50,17 @@ class Upvotes extends Component {
     this.setState({ products: seed })
   }
 
-  handleUpvote = (id) => {
-    console.log('hi from upvote')
-    const productUpvoted = this.state.products.map((prod, key) => {
-      if(prod.id === id) {
-        prod.value++;
-      }
-      return prod;
-      // return prod.id === id ? (prod.value++, prod) : prod;
-    });
+  handleUpvote = (id, type) => {
+    let productUpvoted;
+    if (type === 'upvote') {
+      productUpvoted = this.state.products.map((prod, key) => {
+        return prod.id === id ? (prod.value++, prod) : prod;
+      });
+    } else {
+      productUpvoted = this.state.products.map((prod, key) => {
+        return prod.id === id ? (prod.value--, prod) : prod;
+      });
+    }
     this.setState({products: productUpvoted});
   }
   render() {
