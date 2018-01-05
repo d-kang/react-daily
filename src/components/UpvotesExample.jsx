@@ -8,13 +8,23 @@ const seed = [
   { id: 1111, value: 0 },
 ]
 
-const ProductItem = ({ id, value, upvote }) => {
-
-  return (
-    <div >
-      {id}{'   :   '}<div onClick={() => upvote(id)}>{value}</div>
-    </div>
-  )
+class ProductItem extends Component {
+  handleUpvote = () => {
+    this.props.upvote(this.props.id);
+  }
+  render() {
+    const { id, value } = this.props;
+    return (
+      <div>
+        {id}{'   :   '}
+        <span
+          onClick={this.handleUpvote}
+        >
+          {value}
+        </span>
+      </div>
+    )
+  }
 }
 
 const ProductList = ({ products, upvote }) => {
@@ -48,6 +58,7 @@ class Upvotes extends Component {
         prod.value++;
       }
       return prod;
+      // return prod.id === id ? (prod.value++, prod) : prod;
     });
     this.setState({products: productUpvoted});
   }
