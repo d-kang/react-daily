@@ -11,8 +11,8 @@ const seed = [
 class ProductItem extends Component {
   handleUpvote = (e) => {
     const type = e.target.innerText // is upvote or downvote
-    const { upvote, id } = this.props;
-    upvote(id, type);
+    const { upDownVote, id } = this.props;
+    upDownVote(id, type);
   }
   render() {
     const { id, value } = this.props;
@@ -26,7 +26,7 @@ class ProductItem extends Component {
   }
 }
 
-const ProductList = ({ products, upvote }) => {
+const ProductList = ({ products, upDownVote }) => {
   return (
     products.map(({ id, value }, key) => {
       return (
@@ -34,7 +34,7 @@ const ProductList = ({ products, upvote }) => {
           key={`product-${id}`}
           id={id}
           value={value}
-          upvote={upvote}
+          upDownVote={upDownVote}
         />
       )
     })
@@ -50,22 +50,22 @@ class Upvotes extends Component {
     this.setState({ products: seed })
   }
 
-  handleUpvote = (id, type) => {
-    const productUpvoted = this.state.products.map((prod, key) => {
+  handleVote = (id, type) => {
+    const updateVote = this.state.products.map((prod, key) => {
       if (prod.id === id) {
         type === 'upvote' ? prod.value++ : prod.value--
       }
       return prod;
     });
 
-    this.setState({products: productUpvoted});
+    this.setState({products: updateVote});
   }
   render() {
     return (
       <div>
         <ProductList
           products={this.state.products}
-          upvote={this.handleUpvote}
+          upDownVote={this.handleVote}
         />
       </div>
     );
