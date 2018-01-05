@@ -51,16 +51,13 @@ class Upvotes extends Component {
   }
 
   handleUpvote = (id, type) => {
-    let productUpvoted;
-    if (type === 'upvote') {
-      productUpvoted = this.state.products.map((prod, key) => {
-        return prod.id === id ? (prod.value++, prod) : prod;
-      });
-    } else {
-      productUpvoted = this.state.products.map((prod, key) => {
-        return prod.id === id ? (prod.value--, prod) : prod;
-      });
-    }
+    const productUpvoted = this.state.products.map((prod, key) => {
+      if (prod.id === id) {
+        type === 'upvote' ? prod.value++ : prod.value--
+      }
+      return prod;
+    });
+
     this.setState({products: productUpvoted});
   }
   render() {
