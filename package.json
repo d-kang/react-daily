@@ -1,7 +1,9 @@
 {
   "description": "",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-preset-stage-2": "^6.24.1"
+  },
   "author": "David Kang",
   "license": "MIT",
   "name": "",
@@ -37,6 +39,7 @@
     "promise": "8.0.1",
     "raf": "3.4.0",
     "react": "^16.2.0",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-dev-utils": "^4.2.1",
     "react-dom": "^16.2.0",
     "style-loader": "0.19.0",
@@ -88,7 +91,8 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      "react-app",
+      "stage-2"
     ]
   },
   "eslintConfig": {
